@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+build
+jest.config.js
+help.md
+/database/migrations/
+
