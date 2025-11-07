@@ -14,6 +14,9 @@ export class UserController {
         if (!user.name || !user.email || !user.password) {
             return response.status(400).json({message: 'Bad request! Name, email e password são obrigatórios'})
         }
+        if (user.password.length < 3) {
+            return response.status(400).json({message: 'Bad request! Password deve ter no minimo 3 caracteres'})
+        }
         userService.createUser(user.name, user.email)
         return response.status(201).json({message:'Usuario criado'})
 }
@@ -52,6 +55,11 @@ export class UserController {
             userService.updateUser(nome, email)
             return response.status(200).json({message: `Usuario ${nome} atualizado`})
         }
+    }
+    getUser = (request:Request, response:Response) => {
+        const userService = new UserService()
+        const user = userService.getUser()
+        return response.status(200).json(user)
     }
     
 }
