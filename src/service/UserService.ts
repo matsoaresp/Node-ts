@@ -67,6 +67,10 @@ export class UserService {
     getToken = async (email: string , password: string): Promise<string> =>{
         const user = await this.getAuthenticatedUser(email,password)
         
+        if (!user){
+            throw Error('Email/password invalid!')
+            
+        }
         const tokenData = {
             name: user?.name,
             email: user?.email
