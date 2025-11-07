@@ -1,31 +1,14 @@
 import {Request, Response} from 'express'
-import { sign } from 'jsonwebtoken'
-import { Subject } from 'typeorm/persistence/Subject.js'
-
-const user = {
-
-id_user: '123456',
-name: 'Mateus Soares',
-email: 'mateus@gmail.com',
-password: 'password'
-
-
-}
+import { UserService } from '../service/UserService'
 export class LoginController {
-    login = async (request: Request, response:Response) => {
-        
-        const tokenData = {
-            name: user.name,
-            email: user.email
-        }
-    
-        const tokenKey = '123456789'
+    userService:UserService
 
-        const tokenOptions = {
-            subject: user.id_user,
-            
-        }
-        const token = sign(tokenData, tokenKey, tokenOptions)
+    constructor (userService = new UserService()){
+        this.userService = userService
+    }
+    login = async (request: Request, response:Response) => {
+        const {email,password} = request.body
+        const token = await this.userService.getToken(email,password)
         return response.status(200).json({token})
     }
 }
