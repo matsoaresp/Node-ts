@@ -1,6 +1,8 @@
 import { Router, Request, Response } from 'express'
 import { UserController } from './controller/UserController'
 import { LoginController } from './controller/LoginController'  
+import { UserService } from './service/UserService'
+import { verifyAuth } from './midleware/verifyAuth'
 
 const userController = new UserController()
 const loginController = new LoginController()
