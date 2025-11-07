@@ -6,6 +6,9 @@ const db = [
 ]
 export class UserService {
 
+    getUser(){
+        return db[0]
+    }
 
     createUser(name: string, email: string) {
         const user = {
