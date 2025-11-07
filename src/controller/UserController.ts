@@ -11,8 +11,8 @@ export class UserController {
         const userService = new UserService()
         const user = request.body
 
-        if (!user.name){
-            return response.status(400).json({message: 'Bad request! Name obrigatório'})
+        if (!user.name || !user.email || !user.password) {
+            return response.status(400).json({message: 'Bad request! Name, email e password são obrigatórios'})
         }
         userService.createUser(user.name, user.email)
         return response.status(201).json({message:'Usuario criado'})
