@@ -12,8 +12,7 @@ const server = express();
     } catch (error) {
         console.error("Error during Data Source initialization", error)
     }
-
-    server.use(express.json())
+ server.use(express.json())
     server.use(router)
     server.listen(5000, () => console.log('Server on'))
 })();

@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class User1762437750065 implements MigrationInterface {
@@ -32,10 +33,12 @@ export class User1762437750065 implements MigrationInterface {
             }),
         );
 
-        // 🟢 Insere um usuário inicial (opcional)
+        
+        const id = randomUUID();
+
         await queryRunner.query(`
             INSERT INTO "user" (user_id, name, email, password)
-            VALUES ('1', 'Mateus', 'mateus@gmail.com', '123456');
+            VALUES ('${id}','Mateus', 'mateus@gmail.com', '123456');
         `);
     }
 
