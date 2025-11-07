@@ -17,7 +17,7 @@ export class UserController {
         if (user.password.length < 3) {
             return response.status(400).json({message: 'Bad request! Password deve ter no minimo 3 caracteres'})
         }
-        userService.createUser(user.name, user.email)
+        userService.createUser(user.name, user.email,user.password)
         return response.status(201).json({message:'Usuario criado'})
 }
     getAllUsers = (request: Request, response: Response) => {
