@@ -1,3 +1,8 @@
+import { UserRepository } from "../repositories/UserRepository"
+import { AppDataSource } from "../database"
+import {User} from "../entities/User"
+import { sign } from "jsonwebtoken"
+
 const db = [
 {
     name: "Mateus",
@@ -6,18 +11,31 @@ const db = [
 ]
 export class UserService {
 
-    getUser(){
-        return db[0]
+    private userRepository: UserRepository
+
+    constructor(userRepository = new UserRepository(AppDataSource.manager)
+){
+    this.userRepository = userRepository
+}
+    getUser = () => {
+        
     }
 
-    createUser(name: string, email: string) {
-        const user = {
+    getAuthenticatedUser = async (email:string, password:string): Promise <User | null > =>{
+        return this.userRepository.getUserByEmailAndPassword(email,password)
+
+    }
+
+    async createUser(name: string, email: string, password:string) {
+
+        const user =  this.userRepository.create ({
             name,
-            email
-        }
-        db.push(user)
-        console.log("DB Atualizado", db)
-        
+            email,
+            password
+        });
+        await this.userRepository.save(user)
+        console.log("Usuario salvo no banco", user)
+        return user;
     }
 
     getAllUsers = () =>{
@@ -44,4 +62,22 @@ export class UserService {
         } else {
             return false
     }
-}}
+}
+
+    getToken = async (email: string , password: string): Promise<string> =>{
+        const user = await this.getAuthenticatedUser(email,password)
+        
+        const tokenData = {
+            name: user?.name,
+            email: user?.email
+        }
+
+        const tokenKey = '123456789'
+
+        const tokenOptions = {
+            subject: user?.user_id
+        }
+        const token = sign(tokenData,tokenKey,tokenOptions)
+        return token
+    }
+}

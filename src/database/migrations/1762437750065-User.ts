@@ -5,42 +5,41 @@ export class User1762437750065 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name:"user",
-                columns:[
+                name: "user",
+                columns: [
                     {
-                        name:"id_user",
-                        type: 'string',
+                        name: "user_id",
+                        type: "varchar",
                         isPrimary: true,
                     },
                     {
-                        name:'name',
-                        type: 'string',
+                        name: "name",
+                        type: "varchar",
                         isNullable: false,
                     },
                     {
-                        name:'email',
-                        type: 'string',
+                        name: "email",
+                        type: "varchar",
                         isNullable: false,
                         isUnique: true,
                     },
+                    {
+                        name: "password",
+                        type: "varchar",
+                        isNullable: false,
+                    },
+                ],
+            }),
+        );
 
-                    {
-                        name:'password',
-                        type: 'string',
-                        isNullable: false,
-                        isUnique: true,
-                        
-                    },
-                ]
-            })
-        )
+        // 🟢 Insere um usuário inicial (opcional)
+        await queryRunner.query(`
+            INSERT INTO "user" (user_id, name, email, password)
+            VALUES ('1', 'Mateus', 'mateus@gmail.com', '123456');
+        `);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("users");
+        await queryRunner.dropTable("user");
     }
-
 }
-
-
-    

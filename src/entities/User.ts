@@ -11,10 +11,10 @@ export class User {
     name: string 
 
     @Column({nullable: false})
-    email: string
+    email: string 
 
     @Column({nullable: false})
-    password: string
+    password: string 
 
     constructor(
         user_id: string ,name: string ,email: string, password: string){
