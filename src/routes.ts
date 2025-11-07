@@ -1,7 +1,9 @@
 import { Router, Request, Response } from 'express'
 import { UserController } from './controller/UserController'
+import { LoginController } from './controller/LoginController'  
 
 const userController = new UserController()
+const loginController = new LoginController()
 
 export const router = Router()
 router.get('/', userController.getStatus)
@@ -10,3 +12,5 @@ router.get('/all', userController.getAllUsers)
 router.delete('/deleteAll', userController.deleteAllUsers)
 router.delete('/delete/:name', userController.deleteUser)
 router.put('/update/:name', userController.updateUser)
+
+router.post('/login', loginController.login)
